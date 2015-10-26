@@ -11,18 +11,15 @@ namespace WebApiUtility
 {
     public class WebApiUtil
     {
-        public static async Task<HttpResponseMessage> GetAsync(string baseUrl, string uri)
+        public static async Task<HttpResponseMessage> GetAsync(string url)
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.Deflate;
-            }
-            HttpClient client = new HttpClient(handler);
-            client.BaseAddress = new Uri(baseUrl);
+           
+            HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var response = await client.GetAsync(uri);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/*"));
+            
+            var response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
             return response;
         }
