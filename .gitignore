@@ -30,3 +30,8 @@
 
 # Debug files
 *.dSYM/
+/WebApiUtility/WebApiUtility/bin
+/WebApiUtility/WebApiUtility/obj
+/Utilities/bin/Debug
+/Utilities/obj/Debug
+/WebApiUtility/packages

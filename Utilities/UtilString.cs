@@ -9,6 +9,11 @@ namespace Utilities
 {
     public static class UtilString
     {
+        public static string[] Split(this string str, string split)
+        {
+            string[] tokens = str.Split(new[] { split }, StringSplitOptions.None);
+            return tokens;
+        }
         public static string ToUpperCase(this string str, int index)
         {
             string resStr = string.Empty;
