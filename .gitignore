@@ -36,3 +36,5 @@
 /Utilities/obj/Debug
 /WebApiUtility/packages
 .vs
+bin
+obj
