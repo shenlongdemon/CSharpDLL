@@ -11,6 +11,7 @@ namespace Utilities
     {
         public static object CreateInstance(this object obj, string fullyQualifiedName)
         {
+            var t = obj.GetType().Assembly.GetTypes();
             Type type = Type.GetType(fullyQualifiedName);
             if (type != null)
                 return Activator.CreateInstance(type);
@@ -22,11 +23,21 @@ namespace Utilities
             }
             return null;
         }
-        public static async Task<object> InvokeAsync(this object obj, string method, object[] objs)
+        public static async Task<dynamic> InvokeAsync(this object obj, string methodName, object[] objs)           
         {
-            Type type = obj.GetType();
-            object res = await (Task<object>)type.GetMethod(method).Invoke(obj, objs);
+            Type type = obj.GetType();            
+            MethodInfo method = type.GetMethodByName(methodName);
+            dynamic res = await (Task<dynamic>)method.Invoke(obj, objs);            
             return res;
+        }
+        public static MethodInfo GetMethodByName(this Type type, string methodname)
+        {
+            MethodInfo method = type.GetMethod(methodname);
+            if (method == null)
+            {
+                method = type.GetRuntimeMethods().FirstOrDefault(p=> p.Name.ToLower().Equals(methodname.ToLower()));
+            }
+            return method;
         }
     }
 }
