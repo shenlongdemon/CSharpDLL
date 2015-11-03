@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
+
+
+using System.Dynamic;
+using System.Data.Entity;
 namespace Utilities
 {
     public static class UtilClass
@@ -38,6 +44,17 @@ namespace Utilities
                 method = type.GetRuntimeMethods().FirstOrDefault(p=> p.Name.ToLower().Equals(methodname.ToLower()));
             }
             return method;
+        }
+        public static TEntity ToObject<TEntity>(this object obj ) where TEntity:class
+        {
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            TEntity ins = (TEntity)jsSerializer.Deserialize<TEntity>(obj.ToString());
+            return ins;
+        }
+        public static dynamic ToDynamicObject(this object obj) 
+        {
+            dynamic dyn = JsonConvert.DeserializeObject(obj.ToString());
+            return dyn;
         }
     }
 }

@@ -77,5 +77,11 @@ namespace Utilities
             string strFormD = text.Normalize(System.Text.NormalizationForm.FormD);
             return regex.Replace(strFormD, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
         }
+        public static string ConvertUniCodeToASCII(this string s)
+        {
+            Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
+            string temp = s.Normalize(NormalizationForm.FormD);
+            return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
+        }
     }
 }

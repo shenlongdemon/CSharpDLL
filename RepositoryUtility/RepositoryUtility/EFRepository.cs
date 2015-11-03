@@ -59,6 +59,16 @@ namespace RepositoryUtility
             _dbContext.Set<TEntity>().Remove(entity);
             return 1;
         }
+        public IQueryable<TEntity> GetAll()
+        {
+            return _dbContext.Set<TEntity>().AsQueryable<TEntity>();
+        }
+
+        public int DeleteAll(IQueryable<TEntity> entities)
+        {
+            _dbContext.Set<TEntity>().RemoveRange(entities);
+            return 1;
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -93,6 +103,8 @@ namespace RepositoryUtility
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
+        
         #endregion
 
     }
