@@ -36,6 +36,16 @@ namespace Utilities
             dynamic res = await (Task<dynamic>)method.Invoke(obj, objs);            
             return res;
         }
+        public static dynamic Invoke(this object obj, string methodName, object[] objs)
+        {            
+            MethodInfo method = obj.GetMethodByName(methodName);
+            dynamic res = method.Invoke(obj, objs);
+            return res;
+        }
+        public static MethodInfo GetMethodByName(this object obj, string methodname)
+        {
+            return GetMethodByName(obj.GetType(), methodname);
+        }
         public static MethodInfo GetMethodByName(this Type type, string methodname)
         {
             MethodInfo method = type.GetMethod(methodname);
@@ -56,5 +66,6 @@ namespace Utilities
             dynamic dyn = JsonConvert.DeserializeObject(obj.ToString());
             return dyn;
         }
+
     }
 }
