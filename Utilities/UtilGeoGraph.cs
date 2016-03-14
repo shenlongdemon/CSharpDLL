@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Device.Location;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,12 @@ namespace Utilities
             MILES, 
             NAUTICAL_MILES
         };
-
+        public static DbGeography Create(double latitude, double longitude)
+        {
+            string point = string.Format("POINT({1} {0})", latitude, longitude);
+            DbGeography localtion = DbGeography.FromText(point);
+            return localtion;
+        }
         public static double GetDistance(double lat1, double lon1, double lat2, double lon2, DistanceUnit unit)
         {
             double rlat1 = Math.PI * lat1 / 180;

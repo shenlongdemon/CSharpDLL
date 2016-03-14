@@ -21,5 +21,15 @@ namespace WebApiUtility
             var response = await client.GetAsync(url);
             return response;
         }
+        public static async Task<string> GetContentSite(string link)
+        {
+            HttpResponseMessage response = await GetAsync(link);
+            string content = "";
+            if (response.IsSuccessStatusCode)
+            {
+                content = await response.Content.ReadAsStringAsync();
+            }
+            return content;
+        }
     }
 }
